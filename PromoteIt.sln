@@ -5,7 +5,9 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NPR_registration", "NPR_registration\NPR_registration.csproj", "{E13A3AFA-A50F-4EF7-A49E-58B27FABE9B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPRCreateCampaign", "NPRCreateCampaign\NPRCreateCampaign.csproj", "{032B0CFD-6E1C-44E7-8E26-FD2E8837A406}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NPRCreateCampaign", "NPRCreateCampaign\NPRCreateCampaign.csproj", "{032B0CFD-6E1C-44E7-8E26-FD2E8837A406}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Winform-NPR_registration", "Winform-NPR_registration\Winform-NPR_registration.csproj", "{CF391F99-C9A4-46D1-9353-7A4EE55CF72C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{032B0CFD-6E1C-44E7-8E26-FD2E8837A406}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{032B0CFD-6E1C-44E7-8E26-FD2E8837A406}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{032B0CFD-6E1C-44E7-8E26-FD2E8837A406}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF391F99-C9A4-46D1-9353-7A4EE55CF72C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF391F99-C9A4-46D1-9353-7A4EE55CF72C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF391F99-C9A4-46D1-9353-7A4EE55CF72C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF391F99-C9A4-46D1-9353-7A4EE55CF72C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
