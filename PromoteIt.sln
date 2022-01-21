@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NPR_registration", "NPR_reg
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NPRCreateCampaign", "NPRCreateCampaign\NPRCreateCampaign.csproj", "{032B0CFD-6E1C-44E7-8E26-FD2E8837A406}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Winform-NPR_registration", "Winform-NPR_registration\Winform-NPR_registration.csproj", "{CF391F99-C9A4-46D1-9353-7A4EE55CF72C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Winform-NPR_registration", "Winform-NPR_registration\Winform-NPR_registration.csproj", "{CF391F99-C9A4-46D1-9353-7A4EE55CF72C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
