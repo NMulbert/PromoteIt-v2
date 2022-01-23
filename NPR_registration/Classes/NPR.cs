@@ -15,6 +15,10 @@ namespace NPR_registration.Classes
         public string email { get; set; }
         public string website { get; set; }
         public string password { get; set; }
-        //public string[] campaigns { get; set; }
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 }
