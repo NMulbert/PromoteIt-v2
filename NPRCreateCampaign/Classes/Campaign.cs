@@ -19,5 +19,10 @@ namespace NPRCreateCampaign.Classes
         public int productCount { get; set; }
         public int price { get; set; }
 
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
+
     }
 }
