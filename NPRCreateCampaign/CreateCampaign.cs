@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Microsoft.Azure.Cosmos;
 using NPRCreateCampaign.Classes;
 using System.Collections.Generic;
+using System.Net;
 
 namespace NPRCreateCampaign
 {
@@ -34,40 +35,35 @@ namespace NPRCreateCampaign
 
             string dataBaseId = data.dataBaseId;
             string containerId = data.containerId;
-
             database = cosmosClient.GetDatabase(dataBaseId);
+            await cosmosClient.GetDatabase($"{dataBaseId}")
+            .DefineContainer(name: $"{containerId}", partitionKeyPath: $"/campaignName")
+            .WithUniqueKey()
+            .Path($"/{containerId}")
+            .Attach()
+            .CreateIfNotExistsAsync();
             container = database.GetContainer(containerId);
 
-            Campaign newCampaign = new Campaign();
-            newCampaign.campaignName = data.campaignName;
-            newCampaign.campaignLink = data.campaignLink;
-            newCampaign.campaignHashTag = data.campaignHashTag;
-            newCampaign.orgName = data.orgName;
 
-            string sqlQuery = $"SELECT c.campaignName FROM c WHERE c.campaignName = '{newCampaign.campaignName}'";
-            QueryDefinition queryDefinition = new QueryDefinition(sqlQuery);
-            FeedIterator<Campaign> queryResult = container.GetItemQueryIterator<Campaign>(queryDefinition);
 
-            List<Campaign> campaigns = new List<Campaign>();
 
-            while (queryResult.HasMoreResults)
+            Campaign newCampaign = CampaignMannager.CreateCampaign(data);
+           
+
+            //string sqlQuery = $"SELECT c.campaignName FROM c WHERE c.campaignName = '{newCampaign.campaignName}'";
+            
+
+            try
             {
-                FeedResponse<Campaign> currResult = await queryResult.ReadNextAsync();
-                foreach (Campaign item in currResult)
-                {
-                    campaigns.Add(item);
-                }
-            }
-            if (campaigns.Count > 0)
-            {
-                return new BadRequestObjectResult("Campaign name already exists");
-            }
-            else
-            {
-                await container.CreateItemAsync<Campaign>(newCampaign, new PartitionKey(newCampaign.campaignName));
+                ItemResponse<Campaign> respons = await container.CreateItemAsync<Campaign>(newCampaign, new PartitionKey(newCampaign.campaignName));
 
-                return new OkObjectResult("Campaign created");
+                return new OkObjectResult($"Item created for {respons.RequestCharge} R/Us");
             }
+            catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.Conflict)
+            {
+                return new OkObjectResult($"Company name '{newCampaign.campaignName}' already exists.");
+            }
+        
             
 
             
