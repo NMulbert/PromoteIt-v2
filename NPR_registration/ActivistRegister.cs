@@ -8,13 +8,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Microsoft.Azure.Cosmos;
-using NPRCreateCampaign.Classes;
-using System.Collections.Generic;
+using NPR_registration.Classes;
 using System.Net;
 
-namespace NPRCreateCampaign
+namespace NPR_registration
 {
-    public static class CreateCampaign
+    public static class ActivistRegister
     {
         private static string EndpointUri = "https://localhost:8081";
         private static string PrimaryKey = "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==";
@@ -23,7 +22,7 @@ namespace NPRCreateCampaign
         private static Database database;
         private static Container container;
 
-        [FunctionName("CreateCampaign")]
+        [FunctionName("ActivistRegister")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
             ILogger log)
@@ -35,37 +34,31 @@ namespace NPRCreateCampaign
 
             string dataBaseId = data.dataBaseId;
             string containerId = data.containerId;
+
             database = cosmosClient.GetDatabase(dataBaseId);
+
             await cosmosClient.GetDatabase($"{dataBaseId}")
-            .DefineContainer(name: $"{containerId}", partitionKeyPath: $"/campaignName")
+            .DefineContainer(name: $"{containerId}", partitionKeyPath: "/userName")
             .WithUniqueKey()
-            .Path($"/{containerId}")
+            .Path("/userName")
             .Attach()
             .CreateIfNotExistsAsync();
             container = database.GetContainer(containerId);
 
-
-
-
-            Campaign newCampaign = CampaignMannager.CreateCampaign(data);
-           
-
-            //string sqlQuery = $"SELECT c.campaignName FROM c WHERE c.campaignName = '{newCampaign.campaignName}'";
-            
+            Activist newActivist = ActivistCreator.CreateActivist(data);
 
             try
             {
-                ItemResponse<Campaign> respons = await container.CreateItemAsync<Campaign>(newCampaign, new PartitionKey(newCampaign.campaignName));
+                ItemResponse<Activist> respons = await container.CreateItemAsync<Activist>(newActivist, new PartitionKey(newActivist.userName));
 
                 return new OkObjectResult($"Item created for {respons.RequestCharge} R/Us");
             }
             catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.Conflict)
             {
-                return new OkObjectResult($"Campaign name '{newCampaign.campaignName}' already exists.");
+                return new OkObjectResult($"User name '{newActivist.userName}' already exists.");
             }
-        
-            
 
+            
             
         }
     }
