@@ -23,7 +23,7 @@ namespace NPR_registration
         private static Container container;
         [FunctionName("GetAllUseres")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "get","post", Route = null)] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
@@ -102,7 +102,7 @@ namespace NPR_registration
                     }
                     break;
             }
-            return new BadRequestObjectResult("Please sign to the system");
+            return new OkObjectResult("Please sign to the system");
                 
         }
     }
