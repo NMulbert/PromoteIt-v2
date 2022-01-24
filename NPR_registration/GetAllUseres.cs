@@ -72,7 +72,7 @@ namespace NPR_registration
                             FeedResponse<BCR> currResult = await queryResult.ReadNextAsync();
                             foreach (BCR item in currResult)
                             {
-                                if (item.compName.ToString() == data.name)
+                                if (item.compName.ToString() == name)
                                 {
                                     return new OkObjectResult("Logged in");
                                 }
@@ -92,7 +92,7 @@ namespace NPR_registration
                             FeedResponse<Activist> currResult = await queryResult.ReadNextAsync();
                             foreach (Activist item in currResult)
                             {
-                                if (item.userName.ToString() == data.name)
+                                if (item.userName.ToString() == name)
                                 {
                                     return new OkObjectResult("Logged in");
                                 }
