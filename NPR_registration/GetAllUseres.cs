@@ -80,7 +80,27 @@ namespace NPR_registration
                         }
 
                     }
-                    break;  
+                    break;
+                case "Activists":
+                    {
+                        QueryDefinition queryDefinition = new QueryDefinition(sqlQuery);
+                        FeedIterator<Activist> queryResult = container.GetItemQueryIterator<Activist>(queryDefinition);
+                        List<Activist> partitionKeys = new List<Activist>();
+
+                        while (queryResult.HasMoreResults)
+                        {
+                            FeedResponse<Activist> currResult = await queryResult.ReadNextAsync();
+                            foreach (Activist item in currResult)
+                            {
+                                if (item.userName.ToString() == data.name)
+                                {
+                                    return new OkObjectResult("Logged in");
+                                }
+                            }
+                        }
+
+                    }
+                    break;
             }
             return new BadRequestObjectResult("Please sign to the system");
                 
