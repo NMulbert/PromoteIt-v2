@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Winform-BCR_registration", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Winform-Activist_registration", "Winform-Activist_registration\Winform-Activist_registration.csproj", "{CE9F9EAA-3EBD-4670-A9A2-34C1E7C36290}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetBalance", "GetBalance\GetBalance.csproj", "{9B105831-F580-4563-AE11-43B98C0D43AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetBalance", "GetBalance\GetBalance.csproj", "{9B105831-F580-4563-AE11-43B98C0D43AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
