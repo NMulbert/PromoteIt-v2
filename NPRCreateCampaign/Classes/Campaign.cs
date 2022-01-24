@@ -15,6 +15,7 @@ namespace NPRCreateCampaign.Classes
         public string campaignLink { get; set; }
         public string campaignHashTag { get; set; }
         public string orgName { get; set; }
+        public string compName { get; set; }
         public string product { get; set; }
         public int productCount { get; set; }
         public int price { get; set; }
