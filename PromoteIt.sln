@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Winform-NPR_registration", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Winform-BCR_registration", "Winform-BCR_registration\Winform-BCR_registration.csproj", "{09D112EB-A6EC-46EE-AC21-3EAA6D04D73B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Winform-Activist_registration", "Winform-Activist_registration\Winform-Activist_registration.csproj", "{CE9F9EAA-3EBD-4670-A9A2-34C1E7C36290}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Winform-Activist_registration", "Winform-Activist_registration\Winform-Activist_registration.csproj", "{CE9F9EAA-3EBD-4670-A9A2-34C1E7C36290}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetBalance", "GetBalance\GetBalance.csproj", "{9B105831-F580-4563-AE11-43B98C0D43AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{CE9F9EAA-3EBD-4670-A9A2-34C1E7C36290}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE9F9EAA-3EBD-4670-A9A2-34C1E7C36290}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE9F9EAA-3EBD-4670-A9A2-34C1E7C36290}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B105831-F580-4563-AE11-43B98C0D43AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B105831-F580-4563-AE11-43B98C0D43AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B105831-F580-4563-AE11-43B98C0D43AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B105831-F580-4563-AE11-43B98C0D43AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
