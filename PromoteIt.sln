@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Winform-Activist_registrati
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetBalance", "GetBalance\GetBalance.csproj", "{9B105831-F580-4563-AE11-43B98C0D43AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Login_SignIn", "Login_SignIn\Login_SignIn.csproj", "{A60262E1-2BBC-40DE-AAB5-BFEA31F19735}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Login_SignIn", "Login_SignIn\Login_SignIn.csproj", "{A60262E1-2BBC-40DE-AAB5-BFEA31F19735}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
