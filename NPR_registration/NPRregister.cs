@@ -39,40 +39,29 @@ namespace NPR_registration
             string containerId = data.containerId;
 
             database = cosmosClient.GetDatabase(dataBaseId);
+
+            await cosmosClient.GetDatabase($"{dataBaseId}")
+            .DefineContainer(name: $"{containerId}", partitionKeyPath: "/orgName")
+            .WithUniqueKey()
+            .Path("/orgName")
+            .Attach()
+            .CreateIfNotExistsAsync();
             container = database.GetContainer(containerId);
 
-            NPR newNPR = new NPR();
-            newNPR.orgName = data.orgName;
-            newNPR.email = data.email;
-            newNPR.website = data.website;
-            newNPR.password = data.password;
 
-            var sqlQuery = $"SELECT c.orgName FROM c WHERE c.orgName = '{newNPR.orgName}'";
-            QueryDefinition queryDefinition = new QueryDefinition(sqlQuery);
-            FeedIterator<NPR> queryResult = container.GetItemQueryIterator<NPR>(queryDefinition);
+            NPR newNPR = NPRCreator.CreateNPR(data);
 
-            List<NPR> nprs = new List<NPR>();
-
-            while (queryResult.HasMoreResults)
+            try
             {
-                FeedResponse<NPR> currResult = await queryResult.ReadNextAsync();
-                foreach (NPR item in currResult)
-                {
-                    nprs.Add(item);
-                }               
-            }
+                ItemResponse<NPR> respons = await container.CreateItemAsync<NPR>(newNPR, new PartitionKey(newNPR.orgName));
 
-            if (nprs.Count > 0)
-            {
-                return new OkObjectResult("organization name already exists");
+                return new OkObjectResult($"Item created for {respons.RequestCharge} R/Us");
             }
-            else
+            catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.Conflict)
             {
-                await container.CreateItemAsync<NPR>(newNPR, new PartitionKey(newNPR.orgName));
-
-                return new OkObjectResult("item created");
+                return new OkObjectResult($"Company name '{newNPR.orgName}' already exists.");
             }
-            
         }
+
     }
 }
