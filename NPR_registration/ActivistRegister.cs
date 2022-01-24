@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Microsoft.Azure.Cosmos;
 using NPR_registration.Classes;
 using System.Net;
+using System.Net.Http;
 
 namespace NPR_registration
 {
@@ -50,6 +51,18 @@ namespace NPR_registration
             try
             {
                 ItemResponse<Activist> respons = await container.CreateItemAsync<Activist>(newActivist, new PartitionKey(newActivist.userName));
+               
+                HttpClient client = new HttpClient();
+                string url = "http://localhost:7734/api/CreateBalanceAccount";
+
+                var userInput = new
+                {
+                    userName = newActivist.userName,
+                    dataBaseId = "PromoteIt",
+                    containerId = "Balance"
+                };
+
+                await client.PostAsJsonAsync(url, userInput);
 
                 return new OkObjectResult($"Item created for {respons.RequestCharge} R/Us");
             }
