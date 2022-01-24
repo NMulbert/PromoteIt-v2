@@ -36,6 +36,12 @@ namespace NPR_registration
             string containerId = data.containerId;
 
             database = cosmosClient.GetDatabase(dataBaseId);
+            await cosmosClient.GetDatabase($"{dataBaseId}")
+           .DefineContainer(name: $"{containerId}", partitionKeyPath: "/compName")
+           .WithUniqueKey()
+           .Path("/compName")
+           .Attach()
+           .CreateIfNotExistsAsync();
             container = database.GetContainer(containerId);
 
             BCR newBCR = BCRcreator.CreateBCR(data);
