@@ -41,6 +41,52 @@ namespace NPRCreateCampaign
             database = cosmosClient.GetDatabase(dataBaseId);
             container = database.GetContainer(containerId);
 
+            HttpClient clientBalance = new HttpClient();
+            string urlPurchaseUpdateBalance = "http://localhost:7734/api/PurchaseUpdateBalance";
+
+            var userDataUpdateBalance = new
+            {
+                userName = data.userName,
+                price = data.price,
+                dataBaseId = "PromoteIt",
+                containerId = "Balance"
+            };
+
+            HttpClient clientProduct = new HttpClient();
+            string urlActivistUpdateProduct = "http://localhost:7071/api/ActivistUpdateProduct";
+
+            var userDataUpdateProduct = new
+            {
+                userName = data.userName,
+                product = data.product,
+                dataBaseId = "PromoteIt",
+                containerId = "Activists"
+            };
+
+            HttpClient clientOrder = new HttpClient();
+            string urlCreateOrder = "http://localhost:7732/api/CreateOrders";
+
+            var userDataCreateOrder = new
+            {
+                userName = data.userName,
+                address = data.address,
+                productName = data.product,
+                price = data.price,
+                compName = data.compName,
+                dataBaseId = "PromoteIt",
+                containerId = "Orders"
+            };
+            
+            HttpClient clientTwitter = new HttpClient();
+            string urlTweetOnPurchase = "http://localhost:7731/api/TweetOnPurchase";
+
+            var userDataTwitter = new
+            {
+                userName = data.userName,         
+                compName = data.compName,              
+            };
+
+
             var sqlQuery = $"SELECT * FROM c WHERE c.campaignName = '{campaignName}'";
             QueryDefinition queryDefinition = new QueryDefinition(sqlQuery);
             FeedIterator<Campaign> queryResult = container.GetItemQueryIterator<Campaign>(queryDefinition);
@@ -55,16 +101,6 @@ namespace NPRCreateCampaign
                             PatchOperation.Increment("/productCount", 1)
                         };
 
-            HttpClient client = new HttpClient();
-            string url = "http://localhost:7734/api/PurchaseUpdateBalance";
-
-            var userData = new
-            {
-                userName = data.userName,
-                price = data.price,
-                dataBaseId = "PromoteIt",
-                containerId = "Balance"
-            };
 
             while (queryResult.HasMoreResults)
             {
@@ -73,15 +109,22 @@ namespace NPRCreateCampaign
                 {
                     await container.PatchItemAsync<Campaign>($"{item.id}", new PartitionKey($"{item.campaignName}"), DecreaseOperation);
 
-                    HttpResponseMessage response = await client.PostAsJsonAsync(url, userData);
+                    HttpResponseMessage responseUpdateBalance = await clientBalance.PostAsJsonAsync(urlPurchaseUpdateBalance, userDataUpdateBalance);
 
-                    if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                    if (responseUpdateBalance.StatusCode == System.Net.HttpStatusCode.BadRequest)
                     {
                         await container.PatchItemAsync<Campaign>($"{item.id}", new PartitionKey($"{item.campaignName}"), IncreaseOperation);
                         return new OkObjectResult("Transaction failed due to insufficient funds.");
                     }
                 }
             }
+
+            await clientProduct.PostAsJsonAsync(urlActivistUpdateProduct, userDataUpdateProduct);
+
+            await clientOrder.PostAsJsonAsync(urlCreateOrder,userDataCreateOrder);
+
+            await clientTwitter.PostAsJsonAsync(urlTweetOnPurchase,userDataTwitter);
+
             return new OkObjectResult($"{data.userName} bought {data.product}");
         }
     }

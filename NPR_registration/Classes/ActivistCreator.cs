@@ -17,6 +17,8 @@ namespace NPR_registration.Classes
             newActivist.address = ActivistData.address;
             newActivist.phoneNumber = ActivistData.phoneNumber;
             newActivist.password = ActivistData.password;
+            newActivist.products = new List<string>();
+            
 
             return newActivist;
         }
