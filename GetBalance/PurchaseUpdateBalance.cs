@@ -24,7 +24,7 @@ namespace GetBalance
 
         [FunctionName("PurchaseUpdateBalance")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "patch", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "patch", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
@@ -61,7 +61,7 @@ namespace GetBalance
                     }
                 }
             }
-            return new OkObjectResult("Insufficient funds, Please tweet more.");
+            return new BadRequestResult();
         }
     }
 }
