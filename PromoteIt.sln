@@ -19,6 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Login_SignIn", "Login_SignI
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwitterAPI", "TwitterAPI\TwitterAPI.csproj", "{DBAB2FC0-1B39-4065-B952-14BE5CA1600F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderApp", "OrderApp\OrderApp.csproj", "{7ECAC503-B85A-4FBA-A402-D74D58765DFA}"
+
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +60,10 @@ Global
 		{DBAB2FC0-1B39-4065-B952-14BE5CA1600F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBAB2FC0-1B39-4065-B952-14BE5CA1600F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBAB2FC0-1B39-4065-B952-14BE5CA1600F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ECAC503-B85A-4FBA-A402-D74D58765DFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ECAC503-B85A-4FBA-A402-D74D58765DFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ECAC503-B85A-4FBA-A402-D74D58765DFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ECAC503-B85A-4FBA-A402-D74D58765DFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
