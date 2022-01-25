@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "GetBalance": {
+      "commandName": "Project",
+      "commandLineArgs": "start --port 7731"
+    }
+  }
+}
