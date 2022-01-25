@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Microsoft.Azure.Cosmos;
-using GetBalance.Classes;
+using System.Collections.Generic;
 
-namespace GetBalance
+namespace NPR_registration.Classes
 {
-    public static class CreateBalanceAccount
+    public static class GetAllActivists
     {
         private static string EndpointUri = "https://localhost:8081";
         private static string PrimaryKey = "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==";
@@ -21,12 +21,14 @@ namespace GetBalance
         private static Database database;
         private static Container container;
 
-        [FunctionName("CreateBalanceAccount")]
+        [FunctionName("GetAllActivists")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
+
+            string name = req.Query["name"];
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
@@ -35,19 +37,24 @@ namespace GetBalance
             string containerId = data.containerId;
 
             database = cosmosClient.GetDatabase(dataBaseId);
-            await cosmosClient.GetDatabase($"{dataBaseId}")
-           .DefineContainer(name: $"{containerId}", partitionKeyPath: "/userName")
-           .WithUniqueKey()
-           .Path("/userName")
-           .Attach()
-           .CreateIfNotExistsAsync();
             container = database.GetContainer(containerId);
 
-            BalanceAccount newAccount = BalanceAccountMapper.MapUserData(data);
+            var sqlQuery = $"SELECT c.userName FROM c";
+            QueryDefinition queryDefinition = new QueryDefinition(sqlQuery);
+            FeedIterator<Activist> queryResult = container.GetItemQueryIterator<Activist>(queryDefinition);
 
-            ItemResponse<BalanceAccount> response = await container.CreateItemAsync<BalanceAccount>(newAccount, new PartitionKey(newAccount.userName));
+            List<string> activistNames = new List<string>();
 
-            return new OkObjectResult($"Balance account created for {response.RequestCharge} R/Us");
+            while (queryResult.HasMoreResults)
+            {
+                FeedResponse<Activist> currentUser = await queryResult.ReadNextAsync();
+                foreach (var item in currentUser)
+                {
+                    activistNames.Add(item.userName);
+                }
+            }
+
+            return new OkObjectResult(activistNames);
         }
     }
 }
