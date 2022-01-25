@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "GetBalance": {
+    "OrderApp": {
       "commandName": "Project",
       "commandLineArgs": "start --port 7732"
     }
