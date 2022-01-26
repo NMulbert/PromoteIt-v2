@@ -75,6 +75,7 @@ namespace TwitterAPI
 
             foreach (var name in activistsNames)
             {
+                int counter = 0;
                 var userTimelineTweets = await client.Timelines.GetUserTimelineAsync($"{name}");
                 
                 foreach (var campaign in campLinkAndHashTag)
@@ -84,10 +85,11 @@ namespace TwitterAPI
                         if (tweet.Text.Contains($"{campaign.campaignHashTag}") && tweet.Text.Contains($"{campaign.campaignlink}"))
                         {
                             //Tweet newTweet = TweetCreator.CreateTweet(tweet, name, campaign.campaignHashTag, campaign.campaignlink);
-                            
+                            counter++;
                         }
                     }
-                }                
+                } 
+                
             }
             return new OkObjectResult("11");
         }
