@@ -18,20 +18,12 @@ namespace TwitterAPI
 {
     public static class UpdateBalanceOnTweet
     {
-        private static string EndpointUri = "https://localhost:8081";
-        private static string PrimaryKey = "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==";
-
-        private static CosmosClient cosmosClient = new CosmosClient(EndpointUri, PrimaryKey);
-        private static Database database;
-        private static Container container;
-
         static string consumerKey = "XOpxtgJlTexsYiRhjoeKc03Zl";
         static string consumerSecret = "k7evEa8DC7QktaGvU51wAeBOBFdPQxmh1Ko836X27lbbC0Hd5a";
         static string accessToken = "2264718769-2dyVQu2boG4CHLNWLNPAiIiRVEad4O62CALbax7";
         static string accessTokenSecret = "nTLN58C70ICurWOIXyIGXUa2h2CKKl6sSVNDzxr72g9v8";
 
         static TwitterClient client = new TwitterClient(consumerKey, consumerSecret, accessToken, accessTokenSecret);
-
 
         [FunctionName("UpdateBalanceOnTweet")]
         public static async Task<IActionResult> Run(
@@ -43,20 +35,23 @@ namespace TwitterAPI
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
 
-            string dataBaseId = data.dataBaseId;
-            string containerId = data.containerId;
-
-            database = cosmosClient.GetDatabase(dataBaseId);
-
             HttpClient clientGetAllActivists = new HttpClient();
             string urlGetAllActivists = "http://localhost:7071/api/GetAllActivists";
 
             HttpClient clientGetCampaigns = new HttpClient();
             string urlGetCampaigns = "http://localhost:7730/api/GetCampaigns";
 
+            HttpClient clientGetAllTweets = new HttpClient();
+            string urlGetAllTweets = "http://localhost:7731/api/GetAllTweets";
+
+            HttpClient clientAddTweet = new HttpClient();
+            string urlAddTweet = "http://localhost:7731/api/AddTweet";
+
+            HttpClient clientUpdateActivistBalance = new HttpClient();
+            string urlUpdateActivistBalance = "http://localhost:7734/api/UpdateActivistBalance";
+
 
             string responseAllActivists = await clientGetAllActivists.GetStringAsync(urlGetAllActivists);
-            
             List<string> activistsNames = JsonConvert.DeserializeObject<List<string>>(responseAllActivists);
 
 
@@ -64,6 +59,17 @@ namespace TwitterAPI
             List<Campaign> campaigns = JsonConvert.DeserializeObject<List<Campaign>>(responsGetCampaigns);
 
             List<CampLinkCampHashTag> campLinkAndHashTag = new List<CampLinkCampHashTag>();
+
+
+            string responseGetAllTweets = await clientGetAllTweets.GetStringAsync(urlGetAllTweets);
+            List<Tweet> allTweets = JsonConvert.DeserializeObject<List<Tweet>>(responseGetAllTweets);
+
+            List<string> tweetIdList = new List<string>();
+
+            foreach (var item in allTweets)
+            {
+                tweetIdList.Add(item.tweetId);
+            }
 
             foreach (var item in campaigns)
             {
@@ -77,21 +83,63 @@ namespace TwitterAPI
             {
                 int counter = 0;
                 var userTimelineTweets = await client.Timelines.GetUserTimelineAsync($"{name}");
-                
+
                 foreach (var campaign in campLinkAndHashTag)
                 {
                     foreach (var tweet in userTimelineTweets)
                     {
-                        if (tweet.Text.Contains($"{campaign.campaignHashTag}") && tweet.Text.Contains($"{campaign.campaignlink}"))
+                        if (tweet.Text.Contains($"{campaign.campaignHashTag}"))
                         {
-                            //Tweet newTweet = TweetCreator.CreateTweet(tweet, name, campaign.campaignHashTag, campaign.campaignlink);
-                            counter++;
+                            foreach (var item in tweet.Entities.Urls)
+                            {
+                                if (item.DisplayedURL.Contains($"{campaign.campaignlink}"))
+                                {
+                                    int i = 0;
+                                    bool isBigger = true;
+                                    while (isBigger && i < tweetIdList.Count)
+                                    {
+                                        if (tweet.Id <= long.Parse(tweetIdList[i]))
+                                        {
+                                            isBigger = false;
+                                        }
+                                        i++;
+                                    }
+                                    if (isBigger == true)
+                                    {
+                                        counter++;
+
+                                        var validTweet = new
+                                        {
+                                            tweetId = tweet.Id.ToString(),
+                                            userName = name,
+                                            hashTag = campaign.campaignHashTag,
+                                            campaignLink = campaign.campaignlink,
+                                            retweetCount = tweet.RetweetCount,
+                                            dataBaseId = "PromoteIt",
+                                            containerId = "Tweets"
+                                        };
+
+                                        await clientAddTweet.PostAsJsonAsync(urlAddTweet, validTweet);
+                                    }
+                                }
+                            }
                         }
                     }
-                } 
-                
+                }
+                if (counter > 0)
+                {
+                    var updatedBalance = new
+                    {
+                        userName = name,
+                        addedBalance = counter,
+                        dataBaseId = "PromoteIt",
+                        containerId = "Balance"
+                    };
+
+                    await clientUpdateActivistBalance.PostAsJsonAsync(urlUpdateActivistBalance, updatedBalance);
+                }
             }
-            return new OkObjectResult("11");
+            return new OkObjectResult("Checked all acitvists tweets.");
         }
     }
 }
