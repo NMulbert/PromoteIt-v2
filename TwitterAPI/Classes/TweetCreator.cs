@@ -9,13 +9,13 @@ namespace TwitterAPI.Classes
 {
     public class TweetCreator
     {
-        public static Tweet CreateTweet(ITweet tweet, string name, string hashtag,string link)
+        public static Tweet CreateTweet(dynamic data)
         {
             Tweet newTweet = new Tweet();
-            newTweet.tweetId = tweet.Id;
-            newTweet.userName = name;
-            newTweet.hashTag = hashtag;
-            newTweet.campaignLink = link;
+            newTweet.tweetId = data.tweetId;
+            newTweet.userName = data.userName;
+            newTweet.hashTag = data.hashTag;
+            newTweet.campaignLink = data.campaignLink;
             
             return newTweet;
         }

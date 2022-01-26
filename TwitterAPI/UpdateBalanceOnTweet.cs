@@ -83,7 +83,7 @@ namespace TwitterAPI
                     {
                         if (tweet.Text.Contains($"{campaign.campaignHashTag}") && tweet.Text.Contains($"{campaign.campaignlink}"))
                         {
-                            Tweet newTweet = TweetCreator.CreateTweet(tweet, name, campaign.campaignHashTag, campaign.campaignlink);
+                            //Tweet newTweet = TweetCreator.CreateTweet(tweet, name, campaign.campaignHashTag, campaign.campaignlink);
                             
                         }
                     }
