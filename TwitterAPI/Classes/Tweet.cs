@@ -14,6 +14,7 @@ namespace TwitterAPI.Classes
         public string userName { get; set; }
         public string hashTag { get; set; }
         public string campaignLink { get; set; }
+        public int retweetCount { get; set; } = 0;
 
         public override string ToString()
         {
