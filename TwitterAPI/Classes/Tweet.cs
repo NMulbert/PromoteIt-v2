@@ -10,7 +10,7 @@ namespace TwitterAPI.Classes
     public class Tweet
     {
         [JsonProperty(PropertyName = "id")]
-        public long tweetId { get; set; }
+        public string tweetId { get; set; }
         public string userName { get; set; }
         public string hashTag { get; set; }
         public string campaignLink { get; set; }
