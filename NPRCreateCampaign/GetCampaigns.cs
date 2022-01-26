@@ -35,8 +35,8 @@ namespace NPRCreateCampaign
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
 
-            string dataBaseId = data.dataBaseId;
-            string containerId = data.containerId;
+            string dataBaseId = "PromoteIt";//data.dataBaseId;
+            string containerId = "Campaigns";//data.containerId;
 
             database = cosmosClient.GetDatabase(dataBaseId);
             container = database.GetContainer(containerId);
@@ -57,7 +57,7 @@ namespace NPRCreateCampaign
                 }
             }
 
-            return new OkObjectResult(campaigns);
+            return new OkObjectResult(JsonConvert.SerializeObject(campaigns));
         }
     }
 }

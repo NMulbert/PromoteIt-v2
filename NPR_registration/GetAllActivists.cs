@@ -28,13 +28,11 @@ namespace NPR_registration.Classes
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            string name = req.Query["name"];
-
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
 
-            string dataBaseId = data.dataBaseId;
-            string containerId = data.containerId;
+            string dataBaseId = "PromoteIt";  //data.dataBaseId;
+            string containerId = "Activists"; // data.containerId;
 
             database = cosmosClient.GetDatabase(dataBaseId);
             container = database.GetContainer(containerId);
@@ -54,7 +52,7 @@ namespace NPR_registration.Classes
                 }
             }
 
-            return new OkObjectResult(activistNames);
+            return new OkObjectResult(JsonConvert.SerializeObject(activistNames));
         }
     }
 }
