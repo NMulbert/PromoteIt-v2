@@ -12,6 +12,7 @@ namespace TimeTriggerOnTweetSearch
         [FunctionName("TimeTriggerOnTweet")]
         public async Task RunAsync([TimerTrigger("0 */5 * * * *")]TimerInfo myTimer, ILogger log)
         {
+
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
             HttpClient updateBalanceOnTweet = new HttpClient();
             string updateBalanceOnTweetUrl = "http://localhost:7731/api/UpdateBalanceOnTweet";
