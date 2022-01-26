@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TimeTriggerForTweetsSearch": {
+      "commandName": "Project",
+      "commandLineArgs": "start --port 7729"
+    }
+  }
+}

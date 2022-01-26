@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwitterAPI", "TwitterAPI\Tw
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderApp", "OrderApp\OrderApp.csproj", "{7ECAC503-B85A-4FBA-A402-D74D58765DFA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTriggerOnTweetSearch", "TimeTriggerOnTweetSearch\TimeTriggerOnTweetSearch.csproj", "{6AE6413A-34E5-46E1-9A3C-C4CA9ED21959}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{7ECAC503-B85A-4FBA-A402-D74D58765DFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7ECAC503-B85A-4FBA-A402-D74D58765DFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7ECAC503-B85A-4FBA-A402-D74D58765DFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AE6413A-34E5-46E1-9A3C-C4CA9ED21959}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AE6413A-34E5-46E1-9A3C-C4CA9ED21959}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AE6413A-34E5-46E1-9A3C-C4CA9ED21959}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AE6413A-34E5-46E1-9A3C-C4CA9ED21959}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
