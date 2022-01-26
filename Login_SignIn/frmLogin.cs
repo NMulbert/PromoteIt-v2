@@ -1,5 +1,6 @@
 using System.Net.Http.Json;
 
+
 namespace Login_SignIn
 {
     public partial class frmLogin : Form
@@ -82,6 +83,35 @@ namespace Login_SignIn
 
             //lblError.Text = response.Content.ReadAsStringAsync().Result;
             MessageBox.Show(response.Content.ReadAsStringAsync().Result);
+        }
+
+        private void btnSignIn_Click(object sender, EventArgs e)
+        {
+
+            if(rdbNPR.Checked)
+            {
+                Winform_NPR_registration.Form1 signNpr = new Winform_NPR_registration.Form1();
+                signNpr.Show();
+            }
+            else if(rdbBcar.Checked)
+            {
+                Winform_BCR_registration.Form1 signBCR = new Winform_BCR_registration.Form1();
+                signBCR.Show();
+            }
+            else if (rdbActivist.Checked)
+            {
+                Winform_Activist_registration.Form1 signBCR = new Winform_Activist_registration.Form1();
+                signBCR.Show();
+            }
+            else
+            {
+                MessageBox.Show("if you want to sign in please choose the kind of user abowe");
+            }
+
+
+
+
+
         }
     }
 }
