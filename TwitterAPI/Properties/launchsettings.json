@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "GetBalance": {
+    "TwitterAPI": {
       "commandName": "Project",
       "commandLineArgs": "start --port 7731"
     }
