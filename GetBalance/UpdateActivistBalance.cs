@@ -24,7 +24,7 @@ namespace GetBalance
 
         [FunctionName("UpdateActivistBalance")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "patch", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "patch", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
@@ -46,7 +46,7 @@ namespace GetBalance
 
             List<PatchOperation> incrementOperation = new List<PatchOperation>()
                                             {
-                                                PatchOperation.Increment("/userBalance", addedBalance),                                              
+                                                PatchOperation.Increment("/userBalance", addedBalance),
                                             };
 
             while (queryResult.HasMoreResults)
