@@ -152,38 +152,44 @@ namespace Login_SignIn
         }
         private async void UpdateSelectedRow()
         {
-            if(lblOrderToUpdate.Text !=null)
+            if(lblItemSelected.Text !=null)
             {
                 HttpClient UpdateOrdersClient = new HttpClient();
                 string UpdateOrderStatusurl = "http://localhost:7732/api/UpdateStatus";
                 var updatecontent = new
                 {
-                    id = lblOrderToUpdate.Text,
+                    id = lblItemSelected.Text,
                     containerId = "Orders",
                     dataBaseId = "PromoteIt"
                 };
                 HttpResponseMessage message = await UpdateOrdersClient.PostAsJsonAsync(UpdateOrderStatusurl, updatecontent);
                 if(message.IsSuccessStatusCode)
                 {
-                    MessageBox.Show("Order Updated");
+                    MessageBox.Show("Order Shipped.");
                 }
                 else
                 {
-                    MessageBox.Show("something went wrongs");
+                    MessageBox.Show("Order already shipped.");
                 }
             }
         }
         private void dgvOrders_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            
             if (dgvOrders.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             {
-                lblOrderToUpdate.Text = dgvOrders.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                if (dgvOrders.Rows[e.RowIndex].Cells[e.ColumnIndex].Value is Guid)
+                {
+                    lblItemSelected.Text = dgvOrders.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                }
+                
             }
         }
 
         private void btnUpdateStatus_Click(object sender, EventArgs e)
         {
             UpdateSelectedRow();
+            Thread.Sleep(3000);
             GetOrdersAsync();
         }
     }
