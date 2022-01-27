@@ -8,4 +8,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Classes\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NPRCreateCampaign\NPRCreateCampaign.csproj" />
+  </ItemGroup>
+
 </Project>
