@@ -51,10 +51,18 @@ namespace Login_SignIn
             else if (rdbActivist.Checked && txtUserName.Text != string.Empty)
             {
                 containerName = CreateContainer(rdbActivist.TabIndex);
-                CallAzureFunction(containerName, txtUserName.Text);
+                userInSystem = await CallAzureFunction(containerName, txtUserName.Text);
 
 
-                this.Hide();
+                name = txtUserName.Text;
+                if (userInSystem)
+                {
+                    Activists_MainUI activistMainUI = new Activists_MainUI();
+                    activistMainUI.Show();
+
+                    this.Hide();
+
+                }
             }
             else if (rdbAdmin.Checked && txtUserName.Text != string.Empty)
             {

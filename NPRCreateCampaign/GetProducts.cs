@@ -32,8 +32,8 @@ namespace NPRCreateCampaign
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
 
-            string dataBaseId = data.dataBaseId;
-            string containerId = data.containerId;
+            string dataBaseId = "PromoteIt";
+            string containerId = "Campaigns";
 
             database = cosmosClient.GetDatabase(dataBaseId);
             container = database.GetContainer(containerId);

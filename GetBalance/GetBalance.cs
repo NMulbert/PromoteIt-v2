@@ -28,18 +28,20 @@ namespace GetBalance
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
+            string name = req.Query["name"];
+
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
 
-            string dataBaseId = data.dataBaseId;
-            string containerId = data.containerId;
+            string dataBaseId = "PromoteIt";
+            string containerId = "Balance";
 
             database = cosmosClient.GetDatabase(dataBaseId);
             container = database.GetContainer(containerId);
 
-            string userName = data.userName;
+            
 
-            var sqlQuery = $"SELECT * FROM c WHERE c.userName = '{userName}'";
+            var sqlQuery = $"SELECT * FROM c WHERE c.userName = '{name}'";
             QueryDefinition queryDefinition = new QueryDefinition(sqlQuery);
             FeedIterator<BalanceAccount> queryResult = container.GetItemQueryIterator<BalanceAccount>(queryDefinition);
 
@@ -48,13 +50,13 @@ namespace GetBalance
                 FeedResponse<BalanceAccount> response = await queryResult.ReadNextAsync();
                 foreach (BalanceAccount item in response)
                 {
-                    if (item.userName == userName)
+                    if (item.userName == name)
                     {
                         return new OkObjectResult($"User Balance: {item.userBalance}");
                     }
                 }
             }
-            return new OkObjectResult($"Could not find user name '{userName}'.");
+            return new BadRequestObjectResult($"Could not find user name '{name}'.");
         }
     }
 }
