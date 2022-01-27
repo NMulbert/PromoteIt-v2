@@ -24,7 +24,7 @@ namespace OrderApp
 
         [FunctionName("UpdateStatus")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "patch", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "patch","post", Route = null)] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
@@ -57,14 +57,14 @@ namespace OrderApp
                 FeedResponse<Order> currResult = await queryResult.ReadNextAsync();
                 foreach (Order order in currResult)
                 {
-                    if (order.Id.ToString() == id)
+                    if (order.Id.ToString() == id&&order.shipped==false)
                     {
                         ItemResponse<Order> updateOrder = await container.PatchItemAsync<Order>($"{order.Id}", new PartitionKey($"{order.userName}"), patchOperations);
                         return new OkObjectResult($"Item updated for {updateOrder.RequestCharge} R/Us");
                     }
                 }
             }
-            return new OkObjectResult("Badquary");
+            return new BadRequestObjectResult("Badquery");
         }
     }
 }

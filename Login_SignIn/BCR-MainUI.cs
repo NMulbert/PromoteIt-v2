@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using NPRCreateCampaign.Classes;
+using OrderApp.Classes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -132,6 +133,58 @@ namespace Login_SignIn
             {
                 MessageBox.Show("Unable to add product.");
             }
+        }
+
+        private async void GetOrdersAsync()
+        {
+            HttpClient GetOrdersClient = new HttpClient();
+            string GetOrdersUrl = $"http://localhost:7732/api/GetOrders?compName={frmLogin.name}";
+
+            string response = await GetOrdersClient.GetStringAsync(GetOrdersUrl);
+            List<Order> ordersLIst = JsonConvert.DeserializeObject<List<Order>>(response);
+            dgvOrders.DataSource = ordersLIst;
+
+        }
+
+        private void btnGetOrders_Click(object sender, EventArgs e)
+        {
+            GetOrdersAsync();
+        }
+        private async void UpdateSelectedRow()
+        {
+            if(lblOrderToUpdate.Text !=null)
+            {
+                HttpClient UpdateOrdersClient = new HttpClient();
+                string UpdateOrderStatusurl = "http://localhost:7732/api/UpdateStatus";
+                var updatecontent = new
+                {
+                    id = lblOrderToUpdate.Text,
+                    containerId = "Orders",
+                    dataBaseId = "PromoteIt"
+                };
+                HttpResponseMessage message = await UpdateOrdersClient.PostAsJsonAsync(UpdateOrderStatusurl, updatecontent);
+                if(message.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("Order Updated");
+                }
+                else
+                {
+                    MessageBox.Show("something went wrongs");
+                }
+            }
+        }
+        private void dgvOrders_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvOrders.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+            {
+                lblOrderToUpdate.Text = dgvOrders.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+            }
+        }
+
+        private void btnUpdateStatus_Click(object sender, EventArgs e)
+        {
+            UpdateSelectedRow();
+            GetOrdersAsync();
         }
     }
 }

@@ -28,17 +28,16 @@ namespace OrderApp
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
+            string compName = req.Query["compName"];
+            
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-
-            string dataBaseId = data.dataBaseId;
-            string containerId = data.containerId;
+            string dataBaseId = "PromoteIt";
+            string containerId = "Orders";
 
             database = cosmosClient.GetDatabase(dataBaseId);
             container = database.GetContainer(containerId);
 
-            var sqlQuery = $"SELECT * FROM c WHERE c.compName='{data.compName}'";
+            var sqlQuery = $"SELECT * FROM c WHERE c.compName='{compName}'";
             QueryDefinition queryDefinition = new QueryDefinition(sqlQuery);
             FeedIterator<Order> queryResult = container.GetItemQueryIterator<Order>(queryDefinition);
 
