@@ -24,7 +24,7 @@ namespace NPRCreateCampaign
 
         [FunctionName("AddProduct")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "patch", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "patch", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
@@ -67,7 +67,7 @@ namespace NPRCreateCampaign
                     }
                 }
             }
-            return new OkObjectResult("Bad query");
+            return new BadRequestObjectResult("Bad query");
         }
     }
 }
