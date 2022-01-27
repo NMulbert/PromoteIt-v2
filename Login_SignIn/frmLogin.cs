@@ -100,7 +100,7 @@ namespace Login_SignIn
             }
             else if (rdbActivist.Checked)
             {
-                Winform_Activist_registration.Form1 signBCR = new Winform_Activist_registration.Form1();
+                Activist_Registration signBCR = new Activist_Registration();
                 signBCR.Show();
             }
             else
