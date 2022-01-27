@@ -90,7 +90,7 @@ namespace Login_SignIn
 
             if(rdbNPR.Checked)
             {
-                Winform_NPR_registration.Form1 signNpr = new Winform_NPR_registration.Form1();
+                NPR_Registration signNpr = new NPR_Registration();
                 signNpr.Show();
             }
             else if(rdbBcar.Checked)

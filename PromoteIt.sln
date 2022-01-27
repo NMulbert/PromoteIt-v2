@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NPR_registration", "NPR_reg
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NPRCreateCampaign", "NPRCreateCampaign\NPRCreateCampaign.csproj", "{032B0CFD-6E1C-44E7-8E26-FD2E8837A406}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Winform-NPR_registration", "Winform-NPR_registration\Winform-NPR_registration.csproj", "{CF391F99-C9A4-46D1-9353-7A4EE55CF72C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Winform-BCR_registration", "Winform-BCR_registration\Winform-BCR_registration.csproj", "{09D112EB-A6EC-46EE-AC21-3EAA6D04D73B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Winform-Activist_registration", "Winform-Activist_registration\Winform-Activist_registration.csproj", "{CE9F9EAA-3EBD-4670-A9A2-34C1E7C36290}"
@@ -21,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwitterAPI", "TwitterAPI\Tw
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderApp", "OrderApp\OrderApp.csproj", "{7ECAC503-B85A-4FBA-A402-D74D58765DFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTrigerUpadteTweetsAndBalance", "TimeTrigerUpadteTweetsAndBalance\TimeTrigerUpadteTweetsAndBalance.csproj", "{C77A8C98-C4AA-47CB-986A-D779DCB658E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeTrigerUpadteTweetsAndBalance", "TimeTrigerUpadteTweetsAndBalance\TimeTrigerUpadteTweetsAndBalance.csproj", "{C77A8C98-C4AA-47CB-986A-D779DCB658E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +35,6 @@ Global
 		{032B0CFD-6E1C-44E7-8E26-FD2E8837A406}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{032B0CFD-6E1C-44E7-8E26-FD2E8837A406}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{032B0CFD-6E1C-44E7-8E26-FD2E8837A406}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CF391F99-C9A4-46D1-9353-7A4EE55CF72C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CF391F99-C9A4-46D1-9353-7A4EE55CF72C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CF391F99-C9A4-46D1-9353-7A4EE55CF72C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CF391F99-C9A4-46D1-9353-7A4EE55CF72C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{09D112EB-A6EC-46EE-AC21-3EAA6D04D73B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{09D112EB-A6EC-46EE-AC21-3EAA6D04D73B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09D112EB-A6EC-46EE-AC21-3EAA6D04D73B}.Release|Any CPU.ActiveCfg = Release|Any CPU
