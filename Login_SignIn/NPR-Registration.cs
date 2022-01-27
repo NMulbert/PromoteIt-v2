@@ -1,18 +1,21 @@
-using System.Net;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
 using System.Net.Http.Json;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
-namespace Winform_NPR_registration
+namespace Login_SignIn
 {
-    public partial class Form1 : Form
+    public partial class NPR_Registration : Form
     {
-        public Form1()
+        public NPR_Registration()
         {
             InitializeComponent();
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void registerBtn_Click(object sender, EventArgs e)
@@ -55,7 +58,7 @@ namespace Winform_NPR_registration
             {
                 passwordErrorLbl.Text = "";
             }
-            if(flag == 0)
+            if (flag == 0)
             {
                 CallAzureFunction();
             }
@@ -63,7 +66,7 @@ namespace Winform_NPR_registration
             {
                 flag = 0;
             }
-            
+
 
         }
 
@@ -80,7 +83,7 @@ namespace Winform_NPR_registration
                 dataBaseId = "PromoteIt",
                 containerId = "NPR"
             };
-            
+
             HttpResponseMessage response = await client.PostAsJsonAsync(url, userInput);
 
             //messageLbl.Text = response.Content.ReadAsStringAsync().Result;
@@ -88,3 +91,5 @@ namespace Winform_NPR_registration
         }
     }
 }
+
+
