@@ -11,20 +11,26 @@ namespace Login_SignIn
             InitializeComponent();
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        private async void btnLogin_Click(object sender, EventArgs e)
         {
+            bool userInSystem = false;
             string containerName = "";
             if (rdbNPR.Checked && txtUserName.Text != string.Empty)
             {
-                containerName = CreateContainer(rdbNPR.TabIndex);
-                CallAzureFunction(containerName, txtUserName.Text);
+               containerName = CreateContainer(rdbNPR.TabIndex);
+               userInSystem = await CallAzureFunction(containerName, txtUserName.Text);
 
-                Name = txtUserName.Text;
+                name = txtUserName.Text;
+                if(userInSystem)
+                {
+                    NPR_MainUI nprMainUI = new NPR_MainUI();
+                    nprMainUI.Show();
 
-                NPR_MainUI nprMainUI = new NPR_MainUI();
-                nprMainUI.Show();
+                    this.Hide();
 
-                this.Hide();
+                }
+             
+
             }
             else if (rdbBcar.Checked && txtUserName.Text != string.Empty)
             {
@@ -78,10 +84,10 @@ namespace Login_SignIn
             return container;
         }
 
-        public async Task CallAzureFunction(string container, string userName)
+        public async Task<bool> CallAzureFunction(string container, string userName)
         {
 
-
+            
             HttpClient client = new HttpClient();
             string url = "http://localhost:7071/api/GetAllUseres";
 
@@ -97,6 +103,16 @@ namespace Login_SignIn
 
             //lblError.Text = response.Content.ReadAsStringAsync().Result;
             MessageBox.Show(response.Content.ReadAsStringAsync().Result);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+                
+
         }
 
         private void btnSignIn_Click(object sender, EventArgs e)
