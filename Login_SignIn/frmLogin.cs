@@ -35,10 +35,18 @@ namespace Login_SignIn
             else if (rdbBcar.Checked && txtUserName.Text != string.Empty)
             {
                 containerName = CreateContainer(rdbBcar.TabIndex);
-                CallAzureFunction(containerName, txtUserName.Text);
+                userInSystem = await CallAzureFunction(containerName, txtUserName.Text);
 
 
-                this.Hide();
+                name = txtUserName.Text;
+                if (userInSystem)
+                {
+                    BCR_MainUI bcrMainUI = new BCR_MainUI();
+                    bcrMainUI.Show();
+
+                    this.Hide();
+
+                }
             }
             else if (rdbActivist.Checked && txtUserName.Text != string.Empty)
             {
