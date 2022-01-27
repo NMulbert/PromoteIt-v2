@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace Login_SignIn
 {
-    public partial class NPR_Registration : Form
+    public partial class BCR_registration : Form
     {
-        public NPR_Registration()
+        public BCR_registration()
         {
             InitializeComponent();
         }
@@ -22,14 +22,14 @@ namespace Login_SignIn
         {
             int flag = 0;
 
-            if (orgNameTxtBox.Text == "")
+            if (compNameTxtBox.Text == "")
             {
-                orgNameErrorLbl.Text = "Please enter an organization name.";
+                compNameErrorLbl.Text = "Please enter an company name.";
                 flag++;
             }
             else
             {
-                orgNameErrorLbl.Text = "";
+                compNameErrorLbl.Text = "";
             }
             if (emailTxtBox.Text == "")
             {
@@ -40,14 +40,14 @@ namespace Login_SignIn
             {
                 emailErrorLbl.Text = "";
             }
-            if (orgWebsiteTxtBox.Text == "")
+            if (compWebsiteTxtBox.Text == "")
             {
-                orgWebsiteErrorLbl.Text = "Please enter a website address.";
+                compWebsiteErrorLbl.Text = "Please enter a website address.";
                 flag++;
             }
             else
             {
-                orgWebsiteErrorLbl.Text = "";
+                compWebsiteErrorLbl.Text = "";
             }
             if (passwordTxtBox.Text == "")
             {
@@ -66,32 +66,28 @@ namespace Login_SignIn
             {
                 flag = 0;
             }
-
-
         }
 
         public async Task CallAzureFunction()
         {
             HttpClient client = new HttpClient();
-            string url = "http://localhost:7071/api/NPRregister";
+            string url = "http://localhost:7071/api/BCRregister";
+
             var userInput = new
             {
-                orgName = orgNameTxtBox.Text,
+                compName = compNameTxtBox.Text,
                 email = emailTxtBox.Text,
-                website = orgWebsiteTxtBox.Text,
+                website = compWebsiteTxtBox.Text,
                 password = passwordTxtBox.Text,
                 dataBaseId = "PromoteIt",
-                containerId = "NPR"
+                containerId = "BCR"
             };
 
             HttpResponseMessage response = await client.PostAsJsonAsync(url, userInput);
 
-            //messageLbl.Text = response.Content.ReadAsStringAsync().Result;
             MessageBox.Show(response.Content.ReadAsStringAsync().Result);
         }
 
         
     }
 }
-
-
