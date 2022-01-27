@@ -95,7 +95,7 @@ namespace Login_SignIn
             }
             else if(rdbBcar.Checked)
             {
-                Winform_BCR_registration.Form1 signBCR = new Winform_BCR_registration.Form1();
+                BCR_registration signBCR = new BCR_registration();
                 signBCR.Show();
             }
             else if (rdbActivist.Checked)

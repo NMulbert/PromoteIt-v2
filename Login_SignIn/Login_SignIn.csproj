@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Winform-Activist_registration\Winform-Activist_registration.csproj" />
-    <ProjectReference Include="..\Winform-BCR_registration\Winform-BCR_registration.csproj" />
   </ItemGroup>
 
 </Project>
