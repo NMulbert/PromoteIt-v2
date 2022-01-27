@@ -108,9 +108,9 @@
             this.rdbActivist.AutoSize = true;
             this.rdbActivist.Location = new System.Drawing.Point(6, 83);
             this.rdbActivist.Name = "rdbActivist";
-            this.rdbActivist.Size = new System.Drawing.Size(101, 19);
+            this.rdbActivist.Size = new System.Drawing.Size(96, 19);
             this.rdbActivist.TabIndex = 3;
-            this.rdbActivist.Text = "Sosical activist";
+            this.rdbActivist.Text = "Social activist";
             this.rdbActivist.UseVisualStyleBackColor = true;
             // 
             // rdbBcar
@@ -129,10 +129,10 @@
             this.rdbNPR.Checked = true;
             this.rdbNPR.Location = new System.Drawing.Point(6, 33);
             this.rdbNPR.Name = "rdbNPR";
-            this.rdbNPR.Size = new System.Drawing.Size(157, 19);
+            this.rdbNPR.Size = new System.Drawing.Size(163, 19);
             this.rdbNPR.TabIndex = 1;
             this.rdbNPR.TabStop = true;
-            this.rdbNPR.Text = "Non profit representetive";
+            this.rdbNPR.Text = "Non profite representative";
             this.rdbNPR.UseVisualStyleBackColor = true;
             // 
             // txtUserName
