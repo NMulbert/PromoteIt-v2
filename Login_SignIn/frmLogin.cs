@@ -5,6 +5,7 @@ namespace Login_SignIn
 {
     public partial class frmLogin : Form
     {
+        public static string name = "";
         public frmLogin()
         {
             InitializeComponent();
@@ -17,16 +18,29 @@ namespace Login_SignIn
             {
                 containerName = CreateContainer(rdbNPR.TabIndex);
                 CallAzureFunction(containerName, txtUserName.Text);
+
+                Name = txtUserName.Text;
+
+                NPR_MainUI nprMainUI = new NPR_MainUI();
+                nprMainUI.Show();
+
+                this.Hide();
             }
             else if (rdbBcar.Checked && txtUserName.Text != string.Empty)
             {
                 containerName = CreateContainer(rdbBcar.TabIndex);
                 CallAzureFunction(containerName, txtUserName.Text);
+
+
+                this.Hide();
             }
             else if (rdbActivist.Checked && txtUserName.Text != string.Empty)
             {
                 containerName = CreateContainer(rdbActivist.TabIndex);
                 CallAzureFunction(containerName, txtUserName.Text);
+
+
+                this.Hide();
             }
             else if (rdbAdmin.Checked && txtUserName.Text != string.Empty)
             {
@@ -92,16 +106,22 @@ namespace Login_SignIn
             {
                 NPR_Registration signNpr = new NPR_Registration();
                 signNpr.Show();
+
+                this.Hide();
             }
             else if(rdbBcar.Checked)
             {
                 BCR_registration signBCR = new BCR_registration();
                 signBCR.Show();
+
+                this.Hide();
             }
             else if (rdbActivist.Checked)
             {
                 Activist_Registration signBCR = new Activist_Registration();
                 signBCR.Show();
+
+                this.Hide();
             }
             else
             {
