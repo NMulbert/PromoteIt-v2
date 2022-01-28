@@ -13,12 +13,13 @@ namespace Login_SignIn
 {
     public partial class Activist_Registration : Form
     {
+        bool userRegistred = false;
         public Activist_Registration()
         {
             InitializeComponent();
         }
 
-        private void registerBtn_Click_1(object sender, EventArgs e)
+        private async void registerBtn_Click_1(object sender, EventArgs e)
         {
             int flag = 0;
 
@@ -69,7 +70,17 @@ namespace Login_SignIn
             }
             if (flag == 0)
             {
-                CallAzureFunction();
+                await CallAzureFunction();
+                if(userRegistred)
+                {
+                    frmLogin.name = userNameTxtBox.Text;
+                    Activists_MainUI activistsMainUI = new Activists_MainUI();
+                    activistsMainUI.Show();
+
+                    this.Hide();
+                }
+                
+
             }
             else
             {
@@ -96,7 +107,16 @@ namespace Login_SignIn
 
             HttpResponseMessage response = await client.PostAsJsonAsync(url, userInput);
 
-            MessageBox.Show(response.Content.ReadAsStringAsync().Result);
+            
+            if(response.IsSuccessStatusCode)
+            {
+                MessageBox.Show(response.Content.ReadAsStringAsync().Result);
+                userRegistred = true;
+            }
+            else
+            {
+                MessageBox.Show("Activist already exsits");
+            }
         }
 
         

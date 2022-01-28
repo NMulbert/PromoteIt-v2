@@ -39,7 +39,7 @@ namespace NPRCreateCampaign
             await cosmosClient.GetDatabase($"{dataBaseId}")
             .DefineContainer(name: $"{containerId}", partitionKeyPath: $"/campaignName")
             .WithUniqueKey()
-            .Path($"/{containerId}")
+            .Path($"/campaignName")
             .Attach()
             .CreateIfNotExistsAsync();
             container = database.GetContainer(containerId);
@@ -57,11 +57,11 @@ namespace NPRCreateCampaign
             {
                 ItemResponse<Campaign> respons = await container.CreateItemAsync<Campaign>(newCampaign, new PartitionKey(newCampaign.campaignName));
 
-                return new OkObjectResult($"Item created for {respons.RequestCharge} R/Us");
+                return new OkObjectResult($"Campaign created for {respons.RequestCharge} R/Us");
             }
             catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.Conflict)
             {
-                return new OkObjectResult($"Campaign name '{newCampaign.campaignName}' already exists.");
+                return new BadRequestObjectResult($"Campaign name '{newCampaign.campaignName}' already exists.");
             }
         
             
