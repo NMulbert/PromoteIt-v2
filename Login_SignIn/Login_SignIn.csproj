@@ -14,7 +14,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NPRCreateCampaign\NPRCreateCampaign.csproj" />
+    <ProjectReference Include="..\NPR_registration\NPR_registration.csproj" />
     <ProjectReference Include="..\OrderApp\OrderApp.csproj" />
+    <ProjectReference Include="..\TwitterAPI\TwitterAPI.csproj" />
   </ItemGroup>
 
 </Project>
