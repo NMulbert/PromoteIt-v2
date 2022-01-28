@@ -71,8 +71,19 @@ namespace Login_SignIn
             }
             else if (rdbAdmin.Checked && txtUserName.Text != string.Empty)
             {
-                containerName = CreateContainer(rdbAdmin.TabIndex);
-                CallAzureFunction(containerName, txtUserName.Text);
+
+                name = txtUserName.Text;
+                if (txtUserName.Text == "admin")
+                {
+                    Admin_UI adminUI = new Admin_UI();
+                    adminUI.Show();
+
+                    this.Hide();
+                }
+                else
+                {
+                    lblError.Text = "Incorrect admin name.";
+                }
             }
             else if (txtUserName.Text == string.Empty)
             {

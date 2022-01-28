@@ -8,12 +8,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Microsoft.Azure.Cosmos;
-using System.Collections.Generic;
 using NPR_registration.Classes;
+using System.Collections.Generic;
 
 namespace NPR_registration
 {
-    public static class GetAllUseres
+    public static class GetAllUsersAdmin
     {
         private static string EndpointUri = "https://localhost:8081";
         private static string PrimaryKey = "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==";
@@ -22,89 +22,74 @@ namespace NPR_registration
         private static Database database;
         private static Container container;
 
-        [FunctionName("GetAllUseres")]
+        [FunctionName("GetAllUsersAdmin")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get","post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-
-            string dataBaseId = data.dataBaseId;
-            string containerId = data.containerId;
-            string name= data.name;
+            string containerId = req.Query["containerId"];
+            string dataBaseId = "PromoteIt";
 
             database = cosmosClient.GetDatabase(dataBaseId);
             container = database.GetContainer(containerId);
 
             var sqlQuery = $"SELECT * FROM c";
-            switch(containerId)
+
+            switch (containerId)
             {
                 case "NPR":
                     {
                         QueryDefinition queryDefinition = new QueryDefinition(sqlQuery);
                         FeedIterator<NPR> queryResult = container.GetItemQueryIterator<NPR>(queryDefinition);
-                        List<NPR> partitionKeys = new List<NPR>();
+                        List<NPR> listNPR = new List<NPR>();
 
                         while (queryResult.HasMoreResults)
                         {
                             FeedResponse<NPR> currResult = await queryResult.ReadNextAsync();
                             foreach (NPR item in currResult)
                             {
-                                if (item.orgName.ToString()==name)
-                                {
-                                    return new OkObjectResult("Logged in");
-                                }
+                                listNPR.Add(item);
                             }
                         }
-                        
+                        return new OkObjectResult(listNPR);
                     }
-                    break;
                 case "BCR":
                     {
                         QueryDefinition queryDefinition = new QueryDefinition(sqlQuery);
                         FeedIterator<BCR> queryResult = container.GetItemQueryIterator<BCR>(queryDefinition);
-                        List<BCR> partitionKeys = new List<BCR>();
+                        List<BCR> listBCR = new List<BCR>();
 
                         while (queryResult.HasMoreResults)
                         {
                             FeedResponse<BCR> currResult = await queryResult.ReadNextAsync();
                             foreach (BCR item in currResult)
                             {
-                                if (item.compName.ToString() == name)
-                                {
-                                    return new OkObjectResult("Logged in");
-                                }
+                                listBCR.Add(item);
                             }
                         }
-
+                        return new OkObjectResult(listBCR);
                     }
-                    break;
                 case "Activists":
                     {
                         QueryDefinition queryDefinition = new QueryDefinition(sqlQuery);
                         FeedIterator<Activist> queryResult = container.GetItemQueryIterator<Activist>(queryDefinition);
-                        List<Activist> partitionKeys = new List<Activist>();
+                        List<Activist> listActivists = new List<Activist>();
 
                         while (queryResult.HasMoreResults)
                         {
                             FeedResponse<Activist> currResult = await queryResult.ReadNextAsync();
                             foreach (Activist item in currResult)
                             {
-                                if (item.userName.ToString() == name)
-                                {
-                                    return new OkObjectResult("Logged in");
-                                }
+                                listActivists.Add(item);
                             }
                         }
-
+                        return new OkObjectResult(listActivists);
                     }
-                    break;
+                    
             }
-            return new BadRequestObjectResult("Please sign to the system");
-                
+            return new BadRequestObjectResult("Unable to load data.");
         }
     }
 }
