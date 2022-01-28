@@ -10,7 +10,7 @@ namespace TimeTrigerUpadteTweetsAndBalance
     public class UpdateTweetsAndBalance
     {
         [FunctionName("UpdateTweetsAndBalance")]
-        public async Task RunAsync([TimerTrigger("0 */2 * * * *")] TimerInfo myTimer, ILogger log)
+        public async Task RunAsync([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer, ILogger log)
         {
 
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
