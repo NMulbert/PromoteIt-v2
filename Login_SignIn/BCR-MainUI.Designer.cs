@@ -192,6 +192,7 @@
             // 
             this.dgvOrders.AllowUserToAddRows = false;
             this.dgvOrders.AllowUserToDeleteRows = false;
+            this.dgvOrders.AllowUserToOrderColumns = true;
             this.dgvOrders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvOrders.Location = new System.Drawing.Point(788, 59);
             this.dgvOrders.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
