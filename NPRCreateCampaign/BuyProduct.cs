@@ -26,7 +26,7 @@ namespace NPRCreateCampaign
 
         [FunctionName("BuyProduct")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "patch", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
@@ -114,7 +114,7 @@ namespace NPRCreateCampaign
                     if (responseUpdateBalance.StatusCode == System.Net.HttpStatusCode.BadRequest)
                     {
                         await container.PatchItemAsync<Campaign>($"{item.id}", new PartitionKey($"{item.campaignName}"), IncreaseOperation);
-                        return new OkObjectResult("Transaction failed due to insufficient funds.");
+                        return new BadRequestObjectResult("Transaction failed due to insufficient funds.");
                     }
                 }
             }
