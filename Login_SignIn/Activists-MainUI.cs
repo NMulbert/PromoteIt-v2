@@ -26,6 +26,7 @@ namespace Login_SignIn
 
         }
 
+        #region Call Azure functionst functions
         private async Task GetAllActiveCampaignsAsync()
         {
             List<Campaign> allActiveCampaigns = new List<Campaign>();
@@ -44,10 +45,7 @@ namespace Login_SignIn
             var url = "http://localhost:7731/api/UpdateBalanceOnTweet";
             HttpResponseMessage respons = await client.GetAsync(url);
             MessageBox.Show(respons.StatusCode.ToString());
-
-
         }
-
         private async Task GetUserBalanceAsync(string activistName)
         {
             HttpClient client = new HttpClient();
@@ -55,7 +53,37 @@ namespace Login_SignIn
             string response = await client.GetStringAsync(url);
             lblBalance.Text = response;
         }
+        private async Task BuyProductAsync()
+        {
+            HttpClient buyProductClient = new HttpClient();
+            var buyProductUrl = "http://localhost:7730/api/BuyProduct";
 
+            var buyData = new
+            {
+                userName = frmLogin.name,
+                address = txtAddressBox.Text,
+                campaignName = campaignNameCell,
+                compName = compNameCell,
+                product = lblSelectedItem.Text,
+                price = lblSelectedItemPrice.Text,
+                dataBaseId = "PromoteIt",
+                containerId = "Campaigns"
+            };
+
+            HttpResponseMessage response = await buyProductClient.PostAsJsonAsync(buyProductUrl, buyData);
+            if (response.IsSuccessStatusCode)
+            {
+                MessageBox.Show("Product successfuly purchased");
+            }
+            else
+            {
+                MessageBox.Show("Transaction failed due to insufficient funds.");
+            }
+
+        }
+        #endregion
+
+        #region Click Functions
         private void dgvAllActiveCampaigns_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -97,33 +125,15 @@ namespace Login_SignIn
             }
         }
 
-        private async Task BuyProductAsync()
+        private async void btnUpdateBalance_Click(object sender, EventArgs e)
         {
-            HttpClient buyProductClient = new HttpClient();
-            var buyProductUrl = "http://localhost:7730/api/BuyProduct";
-
-            var buyData = new
-            {
-                userName = frmLogin.name,
-                address = txtAddressBox.Text,
-                campaignName = campaignNameCell,
-                compName = compNameCell,
-                product = lblSelectedItem.Text,
-                price = lblSelectedItemPrice.Text,
-                dataBaseId = "PromoteIt",
-                containerId = "Campaigns"
-            };
-
-            HttpResponseMessage response = await buyProductClient.PostAsJsonAsync(buyProductUrl, buyData);
-            if (response.IsSuccessStatusCode)
-            {
-                MessageBox.Show("Product successfuly purchased");
-            }
-            else
-            {
-                MessageBox.Show("Transaction failed due to insufficient funds.");
-            }
-
+            await GetUserBalanceAsync(frmLogin.name);
         }
+
+        private void btnRefreshCampaigns_Click(object sender, EventArgs e)
+        {
+            GetAllActiveCampaignsAsync();
+        } 
+        #endregion
     }
 }

@@ -9,19 +9,24 @@ namespace Login_SignIn
         public frmLogin()
         {
             InitializeComponent();
+
+            //Please start Time trigger function when starting the project
         }
 
+
+
+        #region Click Functions
         private async void btnLogin_Click(object sender, EventArgs e)
         {
             bool userInSystem = false;
             string containerName = "";
             if (rdbNPR.Checked && txtUserName.Text != string.Empty)
             {
-               containerName = CreateContainer(rdbNPR.TabIndex);
-               userInSystem = await CallAzureFunction(containerName, txtUserName.Text);
+                containerName = CreateContainer(rdbNPR.TabIndex);
+                userInSystem = await CallAzureFunction(containerName, txtUserName.Text);
 
                 name = txtUserName.Text;
-                if(userInSystem)
+                if (userInSystem)
                 {
                     NPR_MainUI nprMainUI = new NPR_MainUI();
                     nprMainUI.Show();
@@ -29,7 +34,7 @@ namespace Login_SignIn
                     this.Hide();
 
                 }
-             
+
 
             }
             else if (rdbBcar.Checked && txtUserName.Text != string.Empty)
@@ -78,7 +83,41 @@ namespace Login_SignIn
                 lblError.Text = "";
             }
         }
+        private void btnSignIn_Click(object sender, EventArgs e)
+        {
 
+            if (rdbNPR.Checked)
+            {
+                NPR_Registration signNpr = new NPR_Registration();
+                signNpr.Show();
+
+                this.Hide();
+            }
+            else if (rdbBcar.Checked)
+            {
+                BCR_registration signBCR = new BCR_registration();
+                signBCR.Show();
+
+                this.Hide();
+            }
+            else if (rdbActivist.Checked)
+            {
+                Activist_Registration signBCR = new Activist_Registration();
+                signBCR.Show();
+
+                this.Hide();
+            }
+            else
+            {
+                MessageBox.Show("if you want to sign in please choose the kind of user abowe");
+            }
+
+
+
+
+
+        } 
+        #endregion
         private string CreateContainer(int number)
         {
             string container = "";
@@ -131,39 +170,6 @@ namespace Login_SignIn
 
         }
 
-        private void btnSignIn_Click(object sender, EventArgs e)
-        {
-
-            if(rdbNPR.Checked)
-            {
-                NPR_Registration signNpr = new NPR_Registration();
-                signNpr.Show();
-
-                this.Hide();
-            }
-            else if(rdbBcar.Checked)
-            {
-                BCR_registration signBCR = new BCR_registration();
-                signBCR.Show();
-
-                this.Hide();
-            }
-            else if (rdbActivist.Checked)
-            {
-                Activist_Registration signBCR = new Activist_Registration();
-                signBCR.Show();
-
-                this.Hide();
-            }
-            else
-            {
-                MessageBox.Show("if you want to sign in please choose the kind of user abowe");
-            }
-
-
-
-
-
-        }
+        
     }
 }
