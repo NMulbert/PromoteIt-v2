@@ -56,7 +56,7 @@ namespace NPR_registration
             }
             catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.Conflict)
             {
-                return new OkObjectResult($"Company name '{newBCR.compName}' already exists.");
+                return new BadRequestObjectResult($"Company name '{newBCR.compName}' already exists.");
             }
         }
     }

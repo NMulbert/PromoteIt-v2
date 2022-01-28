@@ -59,7 +59,7 @@ namespace NPR_registration
             }
             catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.Conflict)
             {
-                return new OkObjectResult($"Company name '{newNPR.orgName}' already exists.");
+                return new BadRequestObjectResult($"Company name '{newNPR.orgName}' already exists.");
             }
         }
 

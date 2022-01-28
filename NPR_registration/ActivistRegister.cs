@@ -68,7 +68,7 @@ namespace NPR_registration
             }
             catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.Conflict)
             {
-                return new OkObjectResult($"User name '{newActivist.userName}' already exists.");
+                return new BadRequestObjectResult($"User name '{newActivist.userName}' already exists.");
             }
 
             

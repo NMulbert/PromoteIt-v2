@@ -13,12 +13,13 @@ namespace Login_SignIn
 {
     public partial class BCR_registration : Form
     {
+        bool userRegistred = false;
         public BCR_registration()
         {
             InitializeComponent();
         }
 
-        private void registerBtn_Click_1(object sender, EventArgs e)
+        private async void registerBtn_Click_1(object sender, EventArgs e)
         {
             int flag = 0;
 
@@ -60,7 +61,15 @@ namespace Login_SignIn
             }
             if (flag == 0)
             {
-                CallAzureFunction();
+                await CallAzureFunction();
+                if (userRegistred)
+                {
+                    frmLogin.name = compNameTxtBox.Text;
+                    BCR_MainUI BCRMainUI = new BCR_MainUI();
+                    BCRMainUI.Show();
+
+                    this.Hide();
+                }
             }
             else
             {
@@ -85,7 +94,15 @@ namespace Login_SignIn
 
             HttpResponseMessage response = await client.PostAsJsonAsync(url, userInput);
 
-            MessageBox.Show(response.Content.ReadAsStringAsync().Result);
+            if (response.IsSuccessStatusCode)
+            {
+                MessageBox.Show(response.Content.ReadAsStringAsync().Result);
+                userRegistred = true;
+            }
+            else
+            {
+                MessageBox.Show("Buissnes already Exist");
+            }
         }
 
         

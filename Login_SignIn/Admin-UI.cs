@@ -19,13 +19,7 @@ namespace Login_SignIn
         public Admin_UI()
         {
             InitializeComponent();
-            GetAllCampaignsAsync();
-            GetAllTweetsAsync();
-
             
-            GetAllUsersAsync("BCR");
-            GetAllUsersAsync("NPR");
-            GetAllUsersAsync("Activists");
         }
 
         private async Task GetAllUsersAsync(string containerId)
@@ -100,6 +94,15 @@ namespace Login_SignIn
             string response = await client.GetStringAsync(url);
             List<Campaign> allCampaigns = JsonConvert.DeserializeObject<List<Campaign>>(response);
             dgvAllCampaigns.DataSource = allCampaigns;
+        }
+
+        private async void btnGetData_Click(object sender, EventArgs e)
+        {
+            await GetAllCampaignsAsync();
+            await GetAllTweetsAsync();
+            await GetAllUsersAsync("BCR");
+            await GetAllUsersAsync("NPR");
+            await GetAllUsersAsync("Activists");
         }
     }
 }

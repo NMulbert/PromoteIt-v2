@@ -13,12 +13,13 @@ namespace Login_SignIn
 {
     public partial class NPR_Registration : Form
     {
+        bool userRegistred = false;
         public NPR_Registration()
         {
             InitializeComponent();
         }
 
-        private void registerBtn_Click_1(object sender, EventArgs e)
+        private async void registerBtn_Click_1(object sender, EventArgs e)
         {
             int flag = 0;
 
@@ -60,7 +61,15 @@ namespace Login_SignIn
             }
             if (flag == 0)
             {
-                CallAzureFunction();
+                await CallAzureFunction();
+                if (userRegistred)
+                {
+                    frmLogin.name = orgNameTxtBox.Text;
+                    NPR_MainUI NPRMainUI = new NPR_MainUI();
+                    NPRMainUI.Show();
+
+                    this.Hide();
+                }
             }
             else
             {
@@ -86,8 +95,15 @@ namespace Login_SignIn
 
             HttpResponseMessage response = await client.PostAsJsonAsync(url, userInput);
 
-            //messageLbl.Text = response.Content.ReadAsStringAsync().Result;
-            MessageBox.Show(response.Content.ReadAsStringAsync().Result);
+            if (response.IsSuccessStatusCode)
+            {
+                MessageBox.Show(response.Content.ReadAsStringAsync().Result);
+                userRegistred = true;
+            }
+            else
+            {
+                MessageBox.Show("NPR already exists");
+            }
         }
 
         
